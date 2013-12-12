@@ -14,6 +14,26 @@ exports.encode = function (value) {
 
 exports.decode = decode;
 
+exports.encodeAll = function(values) {
+    var size = 0;
+    for (var i = 0; i < values.length; i++ ) {
+        size+= sizeof(values[i]);
+    }
+    var buffer = bops.create(size), offset = 0;
+    for (var i = 0; i < values.length; i++ ) {
+        offset += encode(values[i], buffer, offset);
+    }
+    return buffer;
+}
+
+exports.decodeAll = function(buffer) {
+    var result = [], decoder = new Decoder(buffer, 0);
+    while (decoder.offset < buffer) {
+        result.push(decoder.parse());
+    }
+    return result;
+}
+
 // https://gist.github.com/frsyuki/5432559 - v5 spec
 //
 // I've used one extension point from `fixext 1` to store `undefined`. On the wire this
@@ -591,5 +611,3 @@ function sizeof(value) {
     return 0
   throw new Error("Unknown type " + type);
 }
-
-
