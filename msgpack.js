@@ -28,7 +28,7 @@ exports.encodeAll = function(values) {
 
 exports.decodeAll = function(buffer) {
     var result = [], decoder = new Decoder(buffer, 0);
-    while (decoder.offset < buffer) {
+    while (decoder.offset < buffer.length) {
         result.push(decoder.parse());
     }
     return result;
