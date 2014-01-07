@@ -341,14 +341,14 @@ function encode(value, buffer, offset) {
     }
     // bin 16
     if (length < 0x10000) {
-      buffer[offset] = 0xd8;
+      buffer[offset] = 0xc5;
       bops.writeUInt16BE(buffer, length, offset + 1);
       bops.copy(value, buffer, offset + 3);
       return 3 + length;
     }
     // bin 32
     if (length < 0x100000000) {
-      buffer[offset] = 0xd9;
+      buffer[offset] = 0xc6;
       bops.writeUInt32BE(buffer, length, offset + 1);
       bops.copy(value, buffer, offset + 5);
       return 5 + length;
